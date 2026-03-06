@@ -1,6 +1,6 @@
-import { User } from "@/types/user";
-import { Note } from "@/types/note";
-import { nextServer } from "./api";
+import { User } from '@/types/user';
+import { Note } from '@/types/note';
+import { nextServer } from './api';
 
 interface ApiResponse {
   notes: Note[];
@@ -16,9 +16,11 @@ export interface NewNote {
 export type RegisterRequest = {
   email: string;
   password: string;
-  userName: string;
 };
 
+type CheckSessionRequest = {
+  success: boolean;
+};
 
 export const fetchNotes = async (
   searchText: string,
@@ -57,4 +59,21 @@ export const register = async (data: RegisterRequest) => {
   return res.data;
 };
 
-export const login = 
+export const login = async (data: RegisterRequest) => {
+  const res = await nextServer.post<User>('/auth/login', data);
+  return res.data;
+};
+
+export const logout = async () => {
+  await nextServer.post('/auth/logout');
+};
+
+export const checkSession = async () => {
+  const res = await nextServer.get<CheckSessionRequest>('/auth/session');
+  return res.data.success;
+};
+
+export const getMe = async () => {
+  const { data } = await nextServer.get<User>('/auth/me');
+  return data;
+};
