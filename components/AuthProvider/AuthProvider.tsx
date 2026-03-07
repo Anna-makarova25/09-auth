@@ -1,6 +1,6 @@
 'use client';
 
-import { checkSession } from '@/lib/clientApi';
+import { checkSession } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';

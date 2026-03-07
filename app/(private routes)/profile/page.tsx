@@ -2,7 +2,7 @@ import Link from 'next/link';
 import css from './ProfilePage.module.css';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { getMe } from '@/lib/serverApi';
+import { getMe } from '@/lib/api/serverApi';
 
 export const dynamic = 'force-dynamic';
 

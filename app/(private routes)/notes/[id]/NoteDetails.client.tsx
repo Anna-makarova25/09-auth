@@ -3,7 +3,7 @@
 import css from '@/app/(private routes)/notes/[id]/NoteDetails.module.css';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Loader from '@/components/Loader/Loader';
-import { fetchNoteById } from '@/lib/clientApi';
+import { fetchNoteById } from '@/lib/api/clientApi';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
