@@ -2,6 +2,7 @@ import Link from 'next/link';
 import css from './ProfilPage.module.css';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { getMe } from '@/lib/clientApi';
 
 export const metadata: Metadata = {
   title: 'ProfilePage',
@@ -21,7 +22,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  let user = null;
+  try {
+    user = await getMe();
+  } catch (error) {
+    console.error('Failed to fetch user data:', error);
+  }
+
   return (
     <>
       <main className={css.mainContent}>
@@ -45,8 +53,8 @@ export default function ProfilePage() {
             />
           </div>
           <div className={css.profileInfo}>
-            <p>Username: {user.username}</p>
-            <p>Email: {user.email}</p>
+            <p>Username: {user?.username}</p>
+            <p>Email: {user?.email}</p>
           </div>
         </div>
       </main>

@@ -18,6 +18,11 @@ export type RegisterRequest = {
   password: string;
 };
 
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
 type CheckSessionRequest = {
   success: boolean;
 };
@@ -64,7 +69,7 @@ export const login = async (data: RegisterRequest) => {
   return res.data;
 };
 
-export const logout = async () => {
+export const logout = async (): Promise<void> => {
   await nextServer.post('/auth/logout');
 };
 
