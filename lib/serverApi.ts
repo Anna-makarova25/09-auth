@@ -15,7 +15,7 @@ export const fetchNotes = async (
   tag: string,
 ): Promise<ApiResponse> => {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get('access_token')?.value;
+  const accessToken = cookieStore.get('accessToken')?.value;
 
   const response = await nextServer.get<ApiResponse>('/notes', {
     params: {
