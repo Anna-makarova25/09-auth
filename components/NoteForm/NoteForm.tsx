@@ -7,16 +7,6 @@ import { createNote } from '@/lib/clientApi';
 import { useRouter } from 'next/navigation';
 import { useNoteDraftStore } from '@/lib/store/noteStore';
 
-// interface NoteFormProps {
-//   onClose?: () => void;
-// }
-
-// interface NoteFormValues {
-//   title: string;
-//   content: string;
-//   tag: string;
-// }
-
 export default function NoteForm() {
   const fieldId = useId();
   const queryClient = useQueryClient();

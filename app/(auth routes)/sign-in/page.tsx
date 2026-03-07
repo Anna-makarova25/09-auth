@@ -11,15 +11,15 @@ export default function SignIn() {
   const router = useRouter();
   const [error, setError] = useState('');
   const setUser = useAuthStore((state) => state.setUser);
+
   const handleSubmit = async (formData: FormData) => {
+    setError('');
     try {
       const formValues = Object.fromEntries(formData) as LoginRequest;
-      const res = await login(formValues);
-      if (res) {
-        setUser(res);
+      const user = await login(formValues);
+      if (user) {
+        setUser(user);
         router.push('/profile');
-      } else {
-        setError('Invalid email or password');
       }
     } catch (error) {
       setError(

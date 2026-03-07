@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import css from './ProfilPage.module.css';
+import css from './ProfilePage.module.css';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { getMe } from '@/lib/clientApi';
+import { getMe } from '@/lib/serverApi';
 
 export const metadata: Metadata = {
   title: 'ProfilePage',
@@ -36,16 +36,14 @@ export default async function ProfilePage() {
         <div className={css.profileCard}>
           <div className={css.header}>
             <h1 className={css.formTitle}>Profile Page</h1>
-            <Link
-              href="/app/(private routes)/profile/edit"
-              className={css.editProfileButton}
-            >
+            <Link href="/profile/edit" className={css.editProfileButton}>
               Edit Profile
             </Link>
           </div>
+
           <div className={css.avatarWrapper}>
             <Image
-              src="{user.avatar}"
+              src={user?.avatar || '/default-avatar.png'}
               alt="User Avatar"
               width={120}
               height={120}

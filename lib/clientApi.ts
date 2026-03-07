@@ -23,10 +23,6 @@ export type LoginRequest = {
   password: string;
 };
 
-type CheckSessionRequest = {
-  success: boolean;
-};
-
 export const fetchNotes = async (
   searchText: string,
   page: number = 1,
@@ -74,11 +70,16 @@ export const logout = async (): Promise<void> => {
 };
 
 export const checkSession = async () => {
-  const res = await nextServer.get<CheckSessionRequest>('/auth/session');
-  return res.data.success;
+  const res = await nextServer.get<User | null>('/auth/session');
+  return res.data;
 };
 
-export const getMe = async () => {
-  const { data } = await nextServer.get<User>('/auth/me');
+export const getMe = async (): Promise<User> => {
+  const { data } = await nextServer.get<User>('/users/me');
   return data;
+};
+
+export const updateMe = async (data: { username: string }): Promise<User> => {
+  const res = await nextServer.patch<User>('/users/me', data);
+  return res.data;
 };

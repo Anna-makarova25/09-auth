@@ -12,7 +12,7 @@ export default function AuthNavigation() {
   const clearIsAuthenticated = useAuthStore(
     (state) => state.clearIsAuthenticated,
   );
-  const hadleLogout = async () => {
+  const handleLogout = async () => {
     await logout();
     clearIsAuthenticated();
     router.push('/sign-in');
@@ -28,7 +28,7 @@ export default function AuthNavigation() {
 
       <li className={css.navigationItem}>
         <p className={css.userEmail}>{user?.email}</p>
-        <button className={css.logoutButton} onClick={hadleLogout}>
+        <button className={css.logoutButton} onClick={handleLogout}>
           Logout
         </button>
       </li>
