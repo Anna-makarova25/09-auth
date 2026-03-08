@@ -21,11 +21,14 @@ export async function proxy(request: NextRequest) {
       const setCookieHeader = response.headers['set-cookie'];
 
       if (setCookieHeader) {
-        setCookieHeader.forEach((cookieString) => {
+        const cookiesToSet = Array.isArray(setCookieHeader)
+          ? setCookieHeader
+          : [setCookieHeader];
+
+        cookiesToSet.forEach((cookieString) => {
           nextResponse.headers.append('set-cookie', cookieString);
         });
       }
-
       return nextResponse;
     } catch {
       return NextResponse.redirect(new URL('/sign-in', request.url));
