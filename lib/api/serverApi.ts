@@ -25,7 +25,7 @@ export const fetchNotes = async (
       tag: tag || undefined,
     },
     headers: {
-      Cookie: `accessToken=${accessToken}`,
+      Cookie: cookieStore.toString(),
     },
   });
   return response.data;

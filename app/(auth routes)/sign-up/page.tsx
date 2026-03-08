@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register, RegisterRequest } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import { ApiError } from '@/app/api/api';
 
 export default function SignUp() {
   const router = useRouter();
@@ -21,12 +20,9 @@ export default function SignUp() {
       } else {
         setError(' Invalid email or password');
       }
-    } catch (error) {
-      setError(
-        (error as ApiError).response?.data?.error ??
-          (error as ApiError).message ??
-          'Oops... some error',
-      );
+    } catch (err: unknown) {
+      const message = (err as Error).message || 'Error occurred';
+      setError(message);
     }
   };
 

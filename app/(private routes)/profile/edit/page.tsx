@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useAuthStore } from '@/lib/store/authStore';
 import { updateMe } from '@/lib/api/clientApi';
-import { ApiError } from '@/app/api/api';
 import css from './EditProfilePage.module.css';
 
 export default function EditProfilePage() {
@@ -33,12 +32,9 @@ export default function EditProfilePage() {
       const updatedUser = await updateMe({ username });
       setUser(updatedUser);
       router.push('/profile');
-    } catch (err) {
-      setError(
-        (err as ApiError).response?.data?.error ??
-          (err as ApiError).message ??
-          'Failed to update profile',
-      );
+    } catch (err: unknown) {
+      const message = (err as Error).message || 'Error occurred';
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }
