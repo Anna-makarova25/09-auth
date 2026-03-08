@@ -5,7 +5,7 @@ const privateRoutes = ['/profile', '/notes'];
 const authRoutes = ['/sign-in', '/sign-up'];
 
 export async function proxy(request: NextRequest) {
-  let accessToken = request.cookies.get('accessToken')?.value;
+  const accessToken = request.cookies.get('accessToken')?.value;
   const refreshToken = request.cookies.get('refreshToken')?.value;
 
   const { pathname } = request.nextUrl;
@@ -16,15 +16,24 @@ export async function proxy(request: NextRequest) {
 
   if (isPrivateRoute && !accessToken && refreshToken) {
     try {
-      await checkSession();
-      return NextResponse.next();
-    } catch (error) {
+      const response = await checkSession();
+      const nextResponse = NextResponse.next();
+      const setCookieHeader = response.headers['set-cookie'];
+
+      if (setCookieHeader) {
+        setCookieHeader.forEach((cookieString) => {
+          nextResponse.headers.append('set-cookie', cookieString);
+        });
+      }
+
+      return nextResponse;
+    } catch {
       return NextResponse.redirect(new URL('/sign-in', request.url));
     }
   }
 
   if (isAuthRoute && accessToken) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   if (isPrivateRoute && !accessToken) {
